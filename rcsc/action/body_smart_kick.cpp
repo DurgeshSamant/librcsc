@@ -76,6 +76,13 @@ Body_SmartKick::execute( PlayerAgent * agent )
                       __FILE__". unknown ball vel" );
         return Body_StopBall().execute( agent );
     }
+    
+    if ( ! wm.ball().posValid() )
+    {
+        dlog.addText( Logger::KICK,
+                      __FILE__". unknown ball pos" );
+        return Body_StopBall().execute( agent );
+    }
 
     double first_speed = std::min( M_first_speed, ServerParam::i().ballSpeedMax() );
     double first_speed_thr = std::max( 0.0, M_first_speed_thr );
@@ -110,13 +117,10 @@ Body_SmartKick::execute( PlayerAgent * agent )
                       M_sequence.power_,
                       (int)M_sequence.pos_list_.size() );
 
-        if ( wm.ball().posValid() )
-        {
-          Vector2D vel = M_sequence.pos_list_.front() - wm.ball().pos();
-          Vector2D kick_accel = vel - wm.ball().vel();
-          agent->doKick( kick_accel.r() / wm.self().kickRate(),
+        Vector2D vel = M_sequence.pos_list_.front() - wm.ball().pos();
+        Vector2D kick_accel = vel - wm.ball().vel();
+        agent->doKick( kick_accel.r() / wm.self().kickRate(),
                        kick_accel.th() - wm.self().body() );
-        }
         return true;
     }
 
