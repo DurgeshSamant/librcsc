@@ -76,14 +76,14 @@ Body_SmartKick::execute( PlayerAgent * agent )
                       __FILE__". unknown ball vel" );
         return Body_StopBall().execute( agent );
     }
-    
+    /*
     if ( ! wm.ball().posValid() )
     {
         dlog.addText( Logger::KICK,
                       __FILE__". unknown ball pos" );
         return Body_StopBall().execute( agent );
     }
-
+    */
     double first_speed = std::min( M_first_speed, ServerParam::i().ballSpeedMax() );
     double first_speed_thr = std::max( 0.0, M_first_speed_thr );
     int max_step = std::max( 1, M_max_step );
