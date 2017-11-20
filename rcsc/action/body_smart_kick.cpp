@@ -120,11 +120,14 @@ Body_SmartKick::execute( PlayerAgent * agent )
       if ( ! wm.ball().posValid() )
       {
         Vector2D vel = M_sequence.pos_list_.front() - wm.ball().pos();
-        Vector2D kick_accel = vel - wm.ball().vel();
-        agent->doKick( kick_accel.r() / wm.self().kickRate(),
+        if ( vel.isValid() )
+        {
+          Vector2D kick_accel = vel - wm.ball().vel();
+          agent->doKick( kick_accel.r() / wm.self().kickRate(),
                        kick_accel.th() - wm.self().body() );
-        return true;
+        }
       }
+      return true;
     }
 
 
